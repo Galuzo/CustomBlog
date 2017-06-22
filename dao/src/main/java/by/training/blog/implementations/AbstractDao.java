@@ -13,7 +13,7 @@ import java.util.List;
 public abstract class AbstractDao<T extends AbstractEntity> implements IDao<T> {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     private Class persistentClass;
 

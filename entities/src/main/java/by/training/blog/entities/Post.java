@@ -41,6 +41,19 @@ public class Post extends AbstractEntity {
     }
     private Set<Comment> comments;
 
+    @ManyToMany()
+    @JoinTable(name = "reposts", joinColumns = {
+            @JoinColumn(name = "post_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "user_id",
+                    nullable = false, updatable = false)})
+    public Set<User> getUsers() {
+        return users;
+    }
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+    private Set<User> users;
+
 
 
     public Post() {

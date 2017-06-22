@@ -76,6 +76,18 @@ public class User extends AbstractEntity {
         this.messagesTo = messagesTo;
     }
     private Set<Message> messagesTo;
+
+
+
+    @ManyToMany(mappedBy = "users")
+    public Set<Post> getReposts() {
+        return reposts;
+    }
+    public void setReposts(Set<Post> reposts) {
+        this.reposts = reposts;
+    }
+    private Set<Post> reposts;
+
     public User() {
 
     }

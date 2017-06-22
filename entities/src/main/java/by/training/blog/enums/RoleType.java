@@ -1,4 +1,4 @@
-package by.training.blog.utils;
+package by.training.blog.enums;
 
 /**
  * Created by Win on 17.06.2017.
