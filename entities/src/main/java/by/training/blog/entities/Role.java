@@ -3,6 +3,7 @@ package by.training.blog.entities;
 import by.training.blog.enums.RoleType;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -28,7 +29,7 @@ public class Role  extends AbstractEntity{
     public void setUsers(Set<User> users) {
         this.users = users;
     }
-    private Set<User> users;
+    private Set<User> users=new HashSet<>();
 
     public Role() {
     }

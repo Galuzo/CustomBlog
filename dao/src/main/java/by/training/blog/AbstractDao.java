@@ -1,4 +1,4 @@
-package by.training.blog.implementations;
+package by.training.blog;
 
 import by.training.blog.entities.AbstractEntity;
 import by.training.blog.interfaces.IDao;

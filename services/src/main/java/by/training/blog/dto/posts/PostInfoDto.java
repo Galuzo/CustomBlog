@@ -11,7 +11,7 @@ public class PostInfoDto  extends BaseDto{
     private String title;
     private String body;
     private Date date;
-    private int likes;
+    private int likesCount;
     private int authorId;
 
     public String getTitle() {
@@ -38,12 +38,12 @@ public class PostInfoDto  extends BaseDto{
         this.date = date;
     }
 
-    public int getLikes() {
-        return likes;
+    public int getLikesCount() {
+        return likesCount;
     }
 
-    public void setLikes(int likes) {
-        this.likes = likes;
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
     }
 
     public int getAuthorId() {

@@ -26,7 +26,7 @@ public class PostConverter implements IPostConverter {
         postInfoDto.setAuthorId(entity.getAuthor().getId());
         postInfoDto.setDate(entity.getDate());
         postInfoDto.setBody(entity.getBody());
-        postInfoDto.setLikes(entity.getLikes());
+        postInfoDto.setLikesCount(entity.getLikesCount());
         postInfoDto.setId(entity.getId());
         return postInfoDto;    }
 
@@ -44,7 +44,7 @@ public class PostConverter implements IPostConverter {
     public Post dtoToEntity(PostInfoDto dto) {
         Post post = new Post();
         post.setBody(dto.getBody());
-        post.setLikes(dto.getLikes());
+        post.setLikesCount(dto.getLikesCount());
         post.setTitle(dto.getTitle());
         post.setDate(dto.getDate());
         post.setId(dto.getId());

@@ -1,5 +1,6 @@
 package by.training.blog.implementations;
 
+import by.training.blog.AbstractDao;
 import by.training.blog.entities.Comment;
 import by.training.blog.interfaces.ICommentDao;
 import org.springframework.stereotype.Repository;

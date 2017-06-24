@@ -1,5 +1,6 @@
 package by.training.blog.implementations;
 
+import by.training.blog.AbstractDao;
 import by.training.blog.entities.Role;
 import by.training.blog.interfaces.IRoleDao;
 import by.training.blog.enums.RoleType;

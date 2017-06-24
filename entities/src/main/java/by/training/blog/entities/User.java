@@ -2,6 +2,7 @@ package by.training.blog.entities;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -41,13 +42,13 @@ public class User extends AbstractEntity {
     public void setPosts(Set<Post> posts) {
         this.posts = posts;
     }
-    private Set<Post> posts;
+    private Set<Post> posts=new HashSet<>();
 
     @ManyToMany
     @JoinTable(
             name = "followers",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "follower_id", referencedColumnName = "ID")
+            inverseJoinColumns = @JoinColumn(name = "follower_id", referencedColumnName = "id")
     )
     public Set<User> getFollowers() {
         return followers;
@@ -55,7 +56,7 @@ public class User extends AbstractEntity {
     public void setFollowers(Set<User> followers) {
         this.followers = followers;
     }
-    private Set<User> followers;
+    private Set<User> followers = new HashSet<>();
 
 
 
@@ -66,7 +67,7 @@ public class User extends AbstractEntity {
     public void setMessagesFrom(Set<Message> messagesFrom) {
         this.messagesFrom = messagesFrom;
     }
-    private Set<Message> messagesFrom;
+    private Set<Message> messagesFrom=new HashSet<>();
 
     @OneToMany(mappedBy = "toUser")
     public Set<Message> getMessagesTo() {
@@ -75,18 +76,33 @@ public class User extends AbstractEntity {
     public void setMessagesTo(Set<Message> messagesTo) {
         this.messagesTo = messagesTo;
     }
-    private Set<Message> messagesTo;
+    private Set<Message> messagesTo=new HashSet<>();
 
 
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany()
+    @JoinTable(name = "reposts", joinColumns = {
+            @JoinColumn(name = "post_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "user_id",
+                    nullable = false, updatable = false)})
     public Set<Post> getReposts() {
         return reposts;
     }
     public void setReposts(Set<Post> reposts) {
         this.reposts = reposts;
     }
-    private Set<Post> reposts;
+    private Set<Post> reposts=new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    public Set<Like> getLikes() {
+        return likes;
+    }
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
+    }
+    private Set<Like> likes=new HashSet<>();
+
+
 
     public User() {
 

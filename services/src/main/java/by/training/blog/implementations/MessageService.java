@@ -10,6 +10,7 @@ import by.training.blog.interfaces.IMessageService;
 import by.training.blog.interfaces.IUserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.GregorianCalendar;
@@ -18,6 +19,7 @@ import java.util.GregorianCalendar;
  * Created by Win on 17.06.2017.
  */
 @Service
+@Transactional
 public class MessageService  extends AbstractService<Message,MessageInfoDto> implements IMessageService {
 
     @Autowired

@@ -2,6 +2,7 @@ package by.training.blog.entities;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -10,17 +11,43 @@ import java.util.Set;
 @Entity
 @Table(name="posts")
 public class Post extends AbstractEntity {
-    @Column(nullable = false,unique = true)
+
+    @Column(nullable = false)
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
     private String title;
 
     @Column(nullable = false)
+    public String getBody() {
+        return body;
+    }
+    public void setBody(String body) {
+        this.body = body;
+    }
     private String body;
 
     @Column(name = "dateOfPost")
+    public Date getDate() {
+        return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
+    }
     private Date date;
 
-    @Column(name = "likes")
-    private int likes;
+    @Column(name = "likeCount")
+    public int getLikesCount() {
+        return likesCount;
+    }
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
+    private int likesCount;
+
 
     @ManyToOne
     @JoinColumn(name="user_id")
@@ -39,56 +66,29 @@ public class Post extends AbstractEntity {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
-    private Set<Comment> comments;
+    private Set<Comment> comments=new HashSet<>();
 
-    @ManyToMany()
-    @JoinTable(name = "reposts", joinColumns = {
-            @JoinColumn(name = "post_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "user_id",
-                    nullable = false, updatable = false)})
+    @ManyToMany(mappedBy ="reposts",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     public Set<User> getUsers() {
         return users;
     }
     public void setUsers(Set<User> users) {
         this.users = users;
     }
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
+
+    @OneToMany(mappedBy = "likedPost",cascade = CascadeType.ALL)
+    public Set<Like> getLikes() {
+        return likes;
+    }
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
+    }
+    private Set<Like> likes=new HashSet<>();
 
 
 
     public Post() {
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class Post extends AbstractEntity {
         int result = title.hashCode();
         result = 31 * result + body.hashCode();
         result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + likes;
+        result = 31 * result + likesCount;
         return result;
     }
 }
