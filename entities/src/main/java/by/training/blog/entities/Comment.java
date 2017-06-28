@@ -27,6 +27,17 @@ public class Comment extends AbstractEntity {
     }
     private Post post;
 
+
+    @ManyToOne()
+    @JoinColumn(name="author_id")
+    public User getCommentAuthor() {
+        return commentAuthor;
+    }
+    public void setCommentAuthor(User commentAuthor) {
+        this.commentAuthor = commentAuthor;
+    }
+    private User commentAuthor;
+
     public Comment() {
     }
 

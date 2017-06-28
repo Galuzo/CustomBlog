@@ -107,16 +107,5 @@ public class LikeServiceTest {
         return postDao.getById(id);
     }
 
-    @After
-    public void cleanAll() {
-        List<Post> postList=postDao.getAll();
-        for (Post post : postList) {
-            postDao.delete(post.getId());
-        }
-        List<User> users = userDao.getAll();
-        for (User user : users) {
-            userDao.delete(user.getId());
-        }
 
-    }
 }

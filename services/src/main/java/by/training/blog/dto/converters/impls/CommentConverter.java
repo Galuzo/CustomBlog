@@ -25,6 +25,7 @@ public class CommentConverter implements ICommentConverter {
         commentInfoDto.setId(entity.getId());
         commentInfoDto.setText(entity.getText());
         commentInfoDto.setPostId(entity.getPost().getId());
+        commentInfoDto.setAuthorId(entity.getCommentAuthor().getId());
         return commentInfoDto;
     }
 

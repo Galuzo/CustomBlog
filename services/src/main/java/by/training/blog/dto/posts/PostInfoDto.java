@@ -1,6 +1,7 @@
 package by.training.blog.dto.posts;
 
 import by.training.blog.dto.BaseDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 public class PostInfoDto  extends BaseDto{
     private String title;
     private String body;
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd-MM-yyyy ")
     private Date date;
     private int likesCount;
     private int authorId;

@@ -35,7 +35,7 @@ public class User extends AbstractEntity {
     }
     private Role role;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
     public Set<Post> getPosts() {
         return posts;
     }
@@ -44,19 +44,27 @@ public class User extends AbstractEntity {
     }
     private Set<Post> posts=new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "followers",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "follower_id", referencedColumnName = "id")
-    )
-    public Set<User> getFollowers() {
-        return followers;
+
+
+    @OneToMany(mappedBy = "whoSubscribes")
+    public Set<Subscription> getOwnSubscribers() {
+        return ownSubscribers;
     }
-    public void setFollowers(Set<User> followers) {
-        this.followers = followers;
+    public void setOwnSubscribers(Set<Subscription> ownSubscribers) {
+        this.ownSubscribers = ownSubscribers;
     }
-    private Set<User> followers = new HashSet<>();
+    private Set<Subscription> ownSubscribers;
+
+
+
+    @OneToMany(mappedBy = "friend")
+    public Set<Subscription> getYourSubscribes() {
+        return yourSubscribes;
+    }
+    public void setYourSubscribes(Set<Subscription> yourSubscribes) {
+        this.yourSubscribes = yourSubscribes;
+    }
+    private Set<Subscription> yourSubscribes;
 
 
 
@@ -101,6 +109,16 @@ public class User extends AbstractEntity {
         this.likes = likes;
     }
     private Set<Like> likes=new HashSet<>();
+
+
+    @OneToMany(mappedBy = "commentAuthor")
+    public Set<Comment> getComments() {
+        return comments;
+    }
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+    private Set<Comment> comments;
 
 
 
@@ -168,7 +186,8 @@ public class User extends AbstractEntity {
         if (!password.equals(user.password)) return false;
         if (!email.equals(user.email)) return false;
         if (lastOnline != null ? !lastOnline.equals(user.lastOnline) : user.lastOnline != null) return false;
-        return dateOfSignUp != null ? dateOfSignUp.equals(user.dateOfSignUp) : user.dateOfSignUp == null;
+        if (!dateOfSignUp.equals(user.dateOfSignUp)) return false;
+        return role.equals(user.role);
     }
 
     @Override
@@ -178,7 +197,8 @@ public class User extends AbstractEntity {
         result = 31 * result + password.hashCode();
         result = 31 * result + email.hashCode();
         result = 31 * result + (lastOnline != null ? lastOnline.hashCode() : 0);
-        result = 31 * result + (dateOfSignUp != null ? dateOfSignUp.hashCode() : 0);
+        result = 31 * result + dateOfSignUp.hashCode();
+        result = 31 * result + role.hashCode();
         return result;
     }
 }

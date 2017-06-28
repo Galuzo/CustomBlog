@@ -1,5 +1,6 @@
 package by.training.blog.interfaces;
 
+import by.training.blog.exceptions.NotFoundException;
 import by.training.blog.exceptions.ServiceException;
 
 import java.util.List;
@@ -10,6 +11,6 @@ import java.util.List;
 public interface IService<T> {
     List<T> getAll();
     T getById(int entityId);
-    void update(T entity);
-    void delete(int entityId) throws ServiceException;
+    void update(int entityId,T entity);
+    void delete(int entityId) throws NotFoundException;
 }

@@ -58,7 +58,7 @@ public class PostServiceTest {
     public void updateShouldChangeObject() {
         PostInfoDto postInfoDto = createPostInfoDto();
         postInfoDto.setTitle("updated");
-        postService.update(postInfoDto);
+        postService.update(postInfoDto.getId(),postInfoDto);
         Post gettedPost = postDao.getById(postInfoDto.getId());
         assertEquals("updated",gettedPost.getTitle());
     }
@@ -111,20 +111,7 @@ public class PostServiceTest {
     }
 
 
-    @After
-    public void cleanAll() {
-        user=null;
-        post=null;
-        List<Post> postList = postDao.getAll();
-        for (Post post : postList) {
-            postDao.delete(post.getId());
-        }
-        List<User> userSet=userDao.getAll();
-        for (User user : userSet) {
-            userDao.delete(user.getId());
-        }
 
-    }
 
 
     private User createUser() {
@@ -142,7 +129,6 @@ public class PostServiceTest {
         PostForCreateDto postForCreateDto = new PostForCreateDto();
         postForCreateDto.setBody(TEST);
         postForCreateDto.setTitle(TEST);
-        postForCreateDto.setAuthorId(1);
         return postForCreateDto;
     }
 

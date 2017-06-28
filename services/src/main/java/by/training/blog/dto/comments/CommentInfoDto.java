@@ -8,6 +8,7 @@ import by.training.blog.dto.BaseDto;
 public class CommentInfoDto extends BaseDto {
     private String text;
     private int postId;
+    private int authorId;
 
     public String getText() {
         return text;
@@ -23,5 +24,13 @@ public class CommentInfoDto extends BaseDto {
 
     public void setPostId(int postId) {
         this.postId = postId;
+    }
+
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 }

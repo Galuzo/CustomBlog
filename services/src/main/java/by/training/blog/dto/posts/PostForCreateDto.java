@@ -8,7 +8,7 @@ import by.training.blog.dto.BaseDto;
 public class PostForCreateDto  extends BaseDto{
     private String title;
     private String body;
-    private int authorId;
+
 
     public String getTitle() {
         return title;
@@ -26,11 +26,5 @@ public class PostForCreateDto  extends BaseDto{
         this.body = body;
     }
 
-    public int getAuthorId() {
-        return authorId;
-    }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
-    }
 }

@@ -1,6 +1,7 @@
 package by.training.blog.dto.messages;
 
 import by.training.blog.dto.BaseDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
@@ -9,6 +10,7 @@ import java.util.Date;
  */
 public class MessageInfoDto extends BaseDto {
     private int toUser_id;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private int fromUser_id;
     private String Text;

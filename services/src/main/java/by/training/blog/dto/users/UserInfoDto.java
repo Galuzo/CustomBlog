@@ -1,20 +1,19 @@
 package by.training.blog.dto.users;
 
-import by.training.blog.dto.BaseDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.deser.Deserializers;
 
 import java.util.Date;
 
 /**
- * Created by Win on 20.06.2017.
+ * Created by Win on 28.06.2017.
  */
-public class UserInfoDto  extends BaseDto{
+public class UserInfoDto extends Deserializers.Base {
     private String firstName;
     private String lastName;
-    private String password;
-    private String email;
+    private String role;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastOnline;
-    private Date dateOfSignUp;
-    private int roleId;
 
     public String getFirstName() {
         return firstName;
@@ -32,20 +31,12 @@ public class UserInfoDto  extends BaseDto{
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getRole() {
+        return role;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Date getLastOnline() {
@@ -54,21 +45,5 @@ public class UserInfoDto  extends BaseDto{
 
     public void setLastOnline(Date lastOnline) {
         this.lastOnline = lastOnline;
-    }
-
-    public Date getDateOfSignUp() {
-        return dateOfSignUp;
-    }
-
-    public void setDateOfSignUp(Date dateOfSignUp) {
-        this.dateOfSignUp = dateOfSignUp;
-    }
-
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
     }
 }
