@@ -5,6 +5,7 @@ import by.training.blog.dto.converters.interfaces.IConverter;
 import by.training.blog.entities.AbstractEntity;
 import by.training.blog.exceptions.NotFoundException;
 import by.training.blog.exceptions.ServiceException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.interfaces.IDao;
 import by.training.blog.interfaces.IService;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,11 @@ public abstract class AbstractService<T1 extends AbstractEntity,T2 extends BaseD
         return dtoInfoList;
     }
 
-    public T2 getById(int entityId) {
+    public T2 getById(int entityId) throws NotFoundException {
         T1 entity = (T1)dao.getById(entityId);
+        if (entity == null) {
+            throw new NotFoundException("object is absent");
+        }
         T2 infoDto = (T2)converter.entityToDto(entity);
         return infoDto;
     }
@@ -43,7 +47,7 @@ public abstract class AbstractService<T1 extends AbstractEntity,T2 extends BaseD
         }
     }
 
-    public void update(int entityId,T2 infoDto) {
+    public void update(int entityId,T2 infoDto) throws WrongArgumentsException, NotFoundException {
         T1 entity = (T1)converter.dtoToEntity(infoDto);
         entity.setId(entityId);
         dao.update(entity);

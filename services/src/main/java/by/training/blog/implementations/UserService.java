@@ -10,6 +10,7 @@ import by.training.blog.enums.RoleType;
 import by.training.blog.exceptions.ExistUserException;
 import by.training.blog.exceptions.IncorrectPasswordException;
 import by.training.blog.exceptions.NotFoundException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.interfaces.IRoleDao;
 import by.training.blog.interfaces.IUserDao;
 import by.training.blog.interfaces.IUserService;
@@ -36,7 +37,16 @@ public class UserService extends AbstractService<User,UserForUpdateDto> implemen
     }
 
     @Override
-    public int save(UserForCreateDto entity) throws ExistUserException {
+    public int save(UserForCreateDto entity) throws ExistUserException, WrongArgumentsException {
+        if (entity.getPassword().trim().length() == 0) {
+            throw new WrongArgumentsException("the password is empty");
+        } else if (entity.getEmail().trim().length() == 0) {
+            throw new WrongArgumentsException("the email is empty");
+        } else if (entity.getFirstName().trim().length() == 0) {
+            throw new WrongArgumentsException("the first Name is empty");
+        } else if (entity.getLastName().trim().length() == 0) {
+            throw new WrongArgumentsException("the last Name is empty");
+        }
         if(userDao.getByEmail(entity.getEmail())!=null)
         {
             throw new ExistUserException("user is already exists");

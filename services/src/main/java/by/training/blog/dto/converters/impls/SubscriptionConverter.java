@@ -3,6 +3,7 @@ package by.training.blog.dto.converters.impls;
 import by.training.blog.dto.converters.interfaces.ISubscriptionConverter;
 import by.training.blog.dto.subscriptions.SubscriptionInfoDto;
 import by.training.blog.entities.Subscription;
+import by.training.blog.exceptions.WrongArgumentsException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -35,5 +36,10 @@ public class SubscriptionConverter implements ISubscriptionConverter {
     @Override
     public Subscription dtoToEntity(SubscriptionInfoDto dto) {
         return null;
+    }
+
+    @Override
+    public void dtoHasErrors(SubscriptionInfoDto dto) throws WrongArgumentsException {
+
     }
 }

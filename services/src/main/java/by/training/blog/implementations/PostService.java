@@ -6,7 +6,9 @@ import by.training.blog.dto.posts.PostForCreateDto;
 import by.training.blog.dto.posts.PostInfoDto;
 import by.training.blog.entities.Post;
 import by.training.blog.entities.User;
+import by.training.blog.exceptions.NotFoundException;
 import by.training.blog.exceptions.ServiceException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.interfaces.IPostDao;
 import by.training.blog.interfaces.IPostService;
 import by.training.blog.interfaces.IUserDao;
@@ -33,10 +35,18 @@ public class PostService extends AbstractService<Post,PostInfoDto> implements IP
     }
 
     @Override
-    public int save(int userId, PostForCreateDto entity)
-    {
+    public int save(int userId, PostForCreateDto entity) throws NotFoundException, WrongArgumentsException {
         Post post = new Post();
         User user = userDao.getById(userId);
+        if (user == null) {
+            throw new NotFoundException("user was not found");
+        }
+        if(entity.getTitle().trim().length()==0 )
+        {
+            throw new WrongArgumentsException("title is empty");
+        } else if (entity.getBody().trim().length() == 0) {
+            throw new WrongArgumentsException("body is empty");
+        }
         post.setAuthor(user);
         post.setTitle(entity.getTitle());
         post.setBody(entity.getBody());

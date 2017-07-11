@@ -7,6 +7,7 @@ import by.training.blog.entities.Comment;
 import by.training.blog.entities.Post;
 import by.training.blog.entities.User;
 import by.training.blog.exceptions.NotFoundException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.interfaces.ICommentDao;
 import by.training.blog.interfaces.ICommentService;
 import by.training.blog.interfaces.IPostDao;
@@ -39,7 +40,14 @@ public class CommentService extends AbstractService<Comment, CommentInfoDto> imp
     }
 
     @Override
-    public int save(int userId, int postId,String text) {
+    public int save(int userId, int postId,String text) throws NotFoundException, WrongArgumentsException {
+        if (postDao.getById(postId) == null) {
+            throw new NotFoundException("The post is not found");
+        } else if (userDao.getById(userId)==null) {
+            throw new NotFoundException("The user is not found");
+        } else if (text.trim().length() == 0) {
+            throw new WrongArgumentsException("the text is empty");
+        }
         Comment comment = new Comment();
         User user = userDao.getById(userId);
         comment.setCommentAuthor(user);

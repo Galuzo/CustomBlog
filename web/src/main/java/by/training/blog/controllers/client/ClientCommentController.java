@@ -6,6 +6,7 @@ import by.training.blog.dto.comments.CommentInfoDto;
 import by.training.blog.entities.Comment;
 import by.training.blog.exceptions.NotFoundException;
 import by.training.blog.exceptions.ServiceException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.interfaces.ICommentService;
 import by.training.blog.responses.SuccessResponse;
 import by.training.blog.security.details.CustomUserDetails;
@@ -28,7 +29,7 @@ public class ClientCommentController {
     private ICommentService commentService;
 
     @RequestMapping(value = "/posts/{id}",method = RequestMethod.POST)
-    public ResponseEntity<SuccessResponse> save(@PathVariable("id") int postId, @RequestBody CommentForCreateDto commentForCreateDto) {
+    public ResponseEntity<SuccessResponse> save(@PathVariable("id") int postId, @RequestBody CommentForCreateDto commentForCreateDto) throws NotFoundException, WrongArgumentsException {
         int userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         int commentId=  commentService.save(userId,postId, commentForCreateDto.getText());
         return new ResponseEntity<>(new SuccessResponse(commentId, HttpStatus.CREATED.toString()), HttpStatus.CREATED);

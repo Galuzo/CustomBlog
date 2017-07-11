@@ -4,6 +4,8 @@ import by.training.blog.dto.converters.interfaces.IMessageConverter;
 import by.training.blog.dto.messages.MessageInfoDto;
 import by.training.blog.entities.Message;
 import by.training.blog.entities.User;
+import by.training.blog.exceptions.NotFoundException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.interfaces.IUserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,7 +44,8 @@ public class MessageConverter implements IMessageConverter {
     }
 
     @Override
-    public Message dtoToEntity(MessageInfoDto dto) {
+    public Message dtoToEntity(MessageInfoDto dto) throws NotFoundException, WrongArgumentsException {
+        dtoHasErrors(dto);
         Message message = new Message();
         message.setId(dto.getId());
         User toUser = userDao.getById(dto.getToUser_id());
@@ -52,6 +55,17 @@ public class MessageConverter implements IMessageConverter {
         message.setText(dto.getText());
         message.setCreateDate(dto.getCreateDate());
         return message;
+    }
+
+    @Override
+    public void dtoHasErrors(MessageInfoDto dto) throws WrongArgumentsException, NotFoundException {
+        if (dto.getText().trim().length() == 0) {
+            throw new WrongArgumentsException("text is empty");
+        } else if (userDao.getById(dto.getFromUser_id()) == null) {
+            throw new NotFoundException("user 'fromUser' was not found");
+        } else if (userDao.getById(dto.getToUser_id()) == null) {
+            throw new NotFoundException("user 'toUser' was not found");
+        }
     }
 
 

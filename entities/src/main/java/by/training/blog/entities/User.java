@@ -53,7 +53,7 @@ public class User extends AbstractEntity {
     public void setOwnSubscribers(Set<Subscription> ownSubscribers) {
         this.ownSubscribers = ownSubscribers;
     }
-    private Set<Subscription> ownSubscribers;
+    private Set<Subscription> ownSubscribers=new HashSet<>();
 
 
 
@@ -64,7 +64,7 @@ public class User extends AbstractEntity {
     public void setYourSubscribes(Set<Subscription> yourSubscribes) {
         this.yourSubscribes = yourSubscribes;
     }
-    private Set<Subscription> yourSubscribes;
+    private Set<Subscription> yourSubscribes=new HashSet<>();
 
 
 
@@ -118,7 +118,7 @@ public class User extends AbstractEntity {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
-    private Set<Comment> comments;
+    private Set<Comment> comments=new HashSet<>();
 
 
 

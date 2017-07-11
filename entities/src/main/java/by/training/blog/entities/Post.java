@@ -98,7 +98,7 @@ public class Post extends AbstractEntity {
 
         Post post = (Post) o;
 
-        if (likes != post.likes) return false;
+        if (likesCount != post.likesCount) return false;
         if (!title.equals(post.title)) return false;
         if (!body.equals(post.body)) return false;
         return date != null ? date.equals(post.date) : post.date == null;

@@ -1,7 +1,9 @@
 package by.training.blog.exceptionhandlers;
 
 import by.training.blog.exceptions.ExistUserException;
+import by.training.blog.exceptions.IncorrectPasswordException;
 import by.training.blog.exceptions.NotFoundException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.responses.FailedResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,19 @@ public class DefaultExceptionHandler {
 
     @ExceptionHandler(value = ExistUserException.class)
     public ResponseEntity<FailedResponse> userExistHandler(Exception e) throws Exception {
-        FailedResponse failedResponse = new FailedResponse(e.getMessage(), HttpStatus.NOT_FOUND.toString());
+        FailedResponse failedResponse = new FailedResponse(e.getMessage(), HttpStatus.BAD_REQUEST.toString());
+        return new ResponseEntity<>(failedResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = WrongArgumentsException.class)
+    public ResponseEntity<FailedResponse> wrongArguments(Exception e) throws Exception {
+        FailedResponse failedResponse = new FailedResponse(e.getMessage(), HttpStatus.BAD_REQUEST.toString());
+        return new ResponseEntity<>(failedResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = IncorrectPasswordException.class)
+    public ResponseEntity<FailedResponse> incorrectPassword(Exception e) throws Exception {
+        FailedResponse failedResponse = new FailedResponse(e.getMessage(), HttpStatus.BAD_REQUEST.toString());
         return new ResponseEntity<>(failedResponse, HttpStatus.BAD_REQUEST);
     }
 }

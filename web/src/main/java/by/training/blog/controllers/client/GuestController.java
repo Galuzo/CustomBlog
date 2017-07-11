@@ -5,6 +5,7 @@ import by.training.blog.dto.users.UserForLoginDto;
 import by.training.blog.exceptions.ExistUserException;
 import by.training.blog.exceptions.IncorrectPasswordException;
 import by.training.blog.exceptions.NotFoundException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.interfaces.IUserService;
 import by.training.blog.responses.SuccessResponse;
 import by.training.blog.security.services.ILoginService;
@@ -29,7 +30,7 @@ public class GuestController {
     private ILoginService loginService;
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
-    public ResponseEntity<SuccessResponse> register(@RequestBody UserForCreateDto userForCreateDto) throws ExistUserException {
+    public ResponseEntity<SuccessResponse> register(@RequestBody UserForCreateDto userForCreateDto) throws ExistUserException, WrongArgumentsException {
        int id= userService.save(userForCreateDto);
         return new ResponseEntity<>(new SuccessResponse(id, HttpStatus.CREATED.toString()), HttpStatus.CREATED);
     }

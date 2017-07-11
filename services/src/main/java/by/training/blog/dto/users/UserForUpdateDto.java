@@ -13,9 +13,9 @@ public class UserForUpdateDto extends BaseDto{
     private String lastName;
     private String password;
     private String email;
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd-MM-yyyy ")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastOnline;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy ")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date dateOfSignUp;
     private int roleId;
 

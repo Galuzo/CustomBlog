@@ -11,7 +11,7 @@ import java.util.Date;
 public class PostInfoDto  extends BaseDto{
     private String title;
     private String body;
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd-MM-yyyy ")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
     private int likesCount;
     private int authorId;

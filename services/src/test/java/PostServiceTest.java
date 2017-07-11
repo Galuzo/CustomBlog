@@ -2,7 +2,9 @@ import by.training.blog.dto.posts.PostForCreateDto;
 import by.training.blog.dto.posts.PostInfoDto;
 import by.training.blog.entities.Post;
 import by.training.blog.entities.User;
+import by.training.blog.exceptions.NotFoundException;
 import by.training.blog.exceptions.ServiceException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.interfaces.IPostDao;
 import by.training.blog.interfaces.IPostService;
 import by.training.blog.interfaces.IUserDao;
@@ -47,7 +49,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void saveShouldSaveObject() {
+    public void saveShouldSaveObject() throws NotFoundException, WrongArgumentsException {
         PostForCreateDto postForCreateDto = createPostForCreate();
         int id=postService.save(user.getId(), postForCreateDto);
         Post expectedPost = postDao.getById(id);
@@ -55,7 +57,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void updateShouldChangeObject() {
+    public void updateShouldChangeObject() throws WrongArgumentsException, NotFoundException {
         PostInfoDto postInfoDto = createPostInfoDto();
         postInfoDto.setTitle("updated");
         postService.update(postInfoDto.getId(),postInfoDto);
@@ -75,7 +77,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void getById() {
+    public void getById() throws NotFoundException {
         PostInfoDto gettedPost=postService.getById(post.getId());
         assertNotNull(gettedPost);
     }

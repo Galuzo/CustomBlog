@@ -1,6 +1,8 @@
 package by.training.blog.controllers.crudcontrollers;
 
 import by.training.blog.dto.comments.CommentInfoDto;
+import by.training.blog.exceptions.NotFoundException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.interfaces.ICommentService;
 import by.training.blog.interfaces.IService;
 import by.training.blog.responses.SuccessResponse;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by Win on 26.06.2017.
  */
 @RestController
-@RequestMapping("/api/v1/comments")
+@RequestMapping("/api/v1/admin/comments")
 public class CommentController extends AbstractController<CommentInfoDto> {
 
     @Autowired
@@ -25,7 +27,7 @@ public class CommentController extends AbstractController<CommentInfoDto> {
     }
 
     @RequestMapping(value = "users/{id}",method = RequestMethod.POST)
-    public ResponseEntity<SuccessResponse> save(@PathVariable int userId, @RequestBody CommentInfoDto commentInfoDto) {
+    public ResponseEntity<SuccessResponse> save(@PathVariable("id") int userId, @RequestBody CommentInfoDto commentInfoDto) throws NotFoundException, WrongArgumentsException {
         int id = commentService.save(userId,commentInfoDto.getPostId(),commentInfoDto.getText());
         return new ResponseEntity<>(new SuccessResponse(id, HttpStatus.CREATED.toString()), HttpStatus.CREATED);
     }

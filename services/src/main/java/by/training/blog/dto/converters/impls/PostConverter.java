@@ -4,6 +4,8 @@ import by.training.blog.dto.converters.interfaces.IPostConverter;
 import by.training.blog.dto.posts.PostInfoDto;
 import by.training.blog.entities.Post;
 import by.training.blog.entities.User;
+import by.training.blog.exceptions.NotFoundException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.interfaces.IUserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,7 +43,8 @@ public class PostConverter implements IPostConverter {
     }
 
     @Override
-    public Post dtoToEntity(PostInfoDto dto) {
+    public Post dtoToEntity(PostInfoDto dto) throws WrongArgumentsException, NotFoundException {
+        dtoHasErrors(dto);
         Post post = new Post();
         post.setBody(dto.getBody());
         post.setLikesCount(dto.getLikesCount());
@@ -51,5 +54,19 @@ public class PostConverter implements IPostConverter {
         User author = userDao.getById(dto.getAuthorId());
         post.setAuthor(author);
         return post;
+    }
+
+    @Override
+    public void dtoHasErrors(PostInfoDto dto) throws WrongArgumentsException,NotFoundException {
+        if(dto.getTitle().trim().length()==0 )
+        {
+            throw new WrongArgumentsException("title is empty");
+        } else if (dto.getBody().trim().length() == 0) {
+            throw new WrongArgumentsException("body is empty");
+        } else if (dto.getLikesCount() < 0) {
+            throw new WrongArgumentsException("count of likes is negative");
+        } else if (userDao.getById(dto.getAuthorId()) == null) {
+            throw new NotFoundException("user was not found");
+        }
     }
 }

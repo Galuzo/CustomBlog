@@ -1,7 +1,9 @@
 package by.training.blog.controllers.crudcontrollers;
 
 import by.training.blog.dto.BaseDto;
+import by.training.blog.exceptions.NotFoundException;
 import by.training.blog.exceptions.ServiceException;
+import by.training.blog.exceptions.WrongArgumentsException;
 import by.training.blog.interfaces.IService;
 import by.training.blog.responses.SuccessResponse;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,10 @@ public abstract class AbstractController<T extends BaseDto> {
     protected abstract IService getService();
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    protected ResponseEntity<SuccessResponse> update(@PathVariable("id") int entityId,@RequestBody T dto) {
+    protected ResponseEntity<SuccessResponse> update(@PathVariable("id") int entityId,@RequestBody T dto) throws NotFoundException, WrongArgumentsException {
+        if (getService().getById(entityId) == null) {
+            throw new NotFoundException("object is absent");
+        }
         getService().update(entityId,dto);
         return new ResponseEntity<>(new SuccessResponse(entityId, HttpStatus.OK.toString()), HttpStatus.OK);
     }
@@ -32,13 +37,20 @@ public abstract class AbstractController<T extends BaseDto> {
     }
 
     @RequestMapping(value ="/{id}",method = RequestMethod.GET)
-    protected ResponseEntity<T> getById(@PathVariable int id) {
+    protected ResponseEntity<T> getById(@PathVariable int id) throws NotFoundException {
         T object = (T)getService().getById(id);
-        return new ResponseEntity<>(object, HttpStatus.OK);
+        if (object != null) {
+            return new ResponseEntity<>(object, HttpStatus.OK);
+        } else {
+            throw new NotFoundException("object is absent");
+        }
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     protected ResponseEntity<SuccessResponse> deleteById(@PathVariable int id) throws ServiceException {
+        if (getService().getById(id) == null) {
+            throw new NotFoundException("object is absent");
+        }
         getService().delete(id);
         return new ResponseEntity<>(new SuccessResponse(id, HttpStatus.OK.toString()), HttpStatus.OK);
     }

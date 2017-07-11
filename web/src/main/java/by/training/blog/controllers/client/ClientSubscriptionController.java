@@ -26,12 +26,12 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/api/v1/client/subscriptions")
-public class SubscriptionController {
+public class ClientSubscriptionController {
 
     @Autowired
     private ISubscriptionService followerService;
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.POST)
+    @RequestMapping(value = "/users/{id}",method = RequestMethod.POST)
     public ResponseEntity<SuccessResponse> subscribe(@PathVariable("id") int followerId) throws NotFoundException, ExistUserException {
         int userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         SubscriptionForCreateDto subscriptionForCreateDto = new SubscriptionForCreateDto();
@@ -40,7 +40,7 @@ public class SubscriptionController {
         return new ResponseEntity<>(new SuccessResponse(userId, HttpStatus.OK.toString()), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/users/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<SuccessResponse> unsubscribe(@PathVariable("id") int followerId)throws NotFoundException {
         int userId = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         followerService.unsubscribe(userId,followerId);
